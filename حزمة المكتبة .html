@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>الحزم المكتبية - متجر الحفلات</title>
+    <nav style="background-color: #6b4226; padding: 10px;">
+        <ul style="list-style-type: none; margin: 0; padding: 0; display: flex; justify-content: center; flex-wrap: wrap;">
+            <li style="margin: 0 15px;"><a href="حزمة الملابس .html" style="color: white; text-decoration: none;">حزمة الملابس</a></li>
+            <li style="margin: 0 15px;"><a href="حزمة الحفلات .html" style="color: white; text-decoration: none;">حزم الحفلات</a></li>
+            <li style="margin: 0 15px;"><a href="اتصل بنا.html" style="color: white; text-decoration: none;">اتصل بنا</a></li>
+
+        </ul>
+    </nav>
+    <link rel="stylesheet" href="style.css"> <!-- نفس الملاحظة حول CSS -->
+    <style>
+        /* أنماط عامة */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .product-section {
+            padding: 30px 0;
+        }
+        .section-title {
+            color: #6b4226;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        .products-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 0 20px;
+        }
+        .product-card {
+            width: 280px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            position: relative;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        .product-info {
+            padding: 15px;
+        }
+        .product-price {
+            color: #6b4226;
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        .add-to-cart {
+            background-color: #6b4226;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        .add-to-cart:hover {
+            background-color: #8a5a3a;
+        }
+        
+        /* أنماط سلة التسوق */
+        .cart-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #6b4226;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #d4a762;
+            color: #6b4226;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            left: -400px;
+            width: 350px;
+            height: 100%;
+            background-color: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            z-index: 999;
+            transition: left 0.3s;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .cart-sidebar.active {
+            left: 0;
+        }
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .cart-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .cart-item-image {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-left: 10px;
+        }
+        .cart-item-details {
+            flex: 1;
+        }
+        .cart-item-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .cart-item-price {
+            color: #6b4226;
+            font-weight: bold;
+        }
+        .cart-item-remove {
+            color: #ff6b6b;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .cart-total {
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .checkout-btn {
+            background-color: #6b4226;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 4px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        .overlay.active {
+            display: block;
+        }
+    </style>
+    
+</head>
+<body>
+     <!-- أيقونة سلة التسوق -->
+     <div class="cart-icon" onclick="toggleCart()">
+        🛒
+        <span class="cart-count" id="cart-count">0</span>
+    </div>
+    
+    <!-- سلة التسوق الجانبية -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>سلة التسوق</h3>
+            <button class="close-cart" onclick="toggleCart()">×</button>
+        </div>
+        <div id="cart-items">
+            <!-- سيتم إضافة العناصر هنا ديناميكيًا -->
+        </div>
+        <div class="cart-total">
+            الإجمالي: <span id="cart-total">0.0</span> دينار
+        </div>
+        <button class="checkout-btn" onclick="checkout()">إتمام الشراء</button>
+    </div>
+    <div class="overlay" id="overlay" onclick="toggleCart()"></div>
+
+<script>
+    // متغيرات سلة التسوق
+    let cart = [];
+    let cartTotal = 0;
+    
+    // عرض/إخفاء سلة التسوق
+    function toggleCart() {
+        const sidebar = document.getElementById('cart-sidebar');
+        const overlay = document.getElementById('overlay');
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+    }
+    
+    // إضافة منتج إلى السلة
+    function addToCart(name, price, image) {
+        // التحقق إذا كان المنتج موجودًا بالفعل في السلة
+        const existingItem = cart.find(item => item.name === name);
+        
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push({
+                name: name,
+                price: price,
+                image: image,
+                quantity: 1
+            });
+        }
+        
+        // تحديث السلة
+        updateCart();
+        
+        // عرض سلة التسوق تلقائيًا
+        document.getElementById('cart-sidebar').classList.add('active');
+        document.getElementById('overlay').classList.add('active');
+        
+        // إشعار بإضافة المنتج
+        alert(`تمت إضافة ${name} إلى سلة التسوق`);
+    }
+    
+    // تحديث عرض سلة التسوق
+    function updateCart() {
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartCountElement = document.getElementById('cart-count');
+        const cartTotalElement = document.getElementById('cart-total');
+        
+        // حساب العدد الإجمالي والعرض
+        let totalCount = 0;
+        cartTotal = 0;
+        
+        // مسح المحتوى الحالي
+        cartItemsContainer.innerHTML = '';
+        
+        // إضافة كل عنصر في السلة
+        cart.forEach(item => {
+            totalCount += item.quantity;
+            cartTotal += item.price * item.quantity;
+            
+            const itemElement = document.createElement('div');
+            itemElement.className = 'cart-item';
+            itemElement.innerHTML = `
+                <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                <div class="cart-item-details">
+                    <div class="cart-item-title">${item.name}</div>
+                    <div class="cart-item-price">${item.price} دينار × ${item.quantity}</div>
+                    <button class="cart-item-remove" onclick="removeFromCart('${item.name}')">إزالة</button>
+                </div>
+            `;
+            
+            cartItemsContainer.appendChild(itemElement);
+        });
+        
+        // تحديث العدد الإجمالي والسعر
+        cartCountElement.textContent = totalCount;
+        cartTotalElement.textContent = cartTotal.toFixed(1);
+    }
+    
+    // إزالة منتج من السلة
+    function removeFromCart(name) {
+        cart = cart.filter(item => item.name !== name);
+        updateCart();
+    }
+    
+    // إتمام عملية الشراء
+    function checkout() {
+        if (cart.length === 0) {
+            alert('سلة التسوق فارغة!');
+            return;
+        }
+        
+        alert(`تم إتمام الطلب بنجاح!\nالإجمالي: ${cartTotal.toFixed(1)} دينار`);
+        cart = [];
+        updateCart();
+        toggleCart();
+    }
+</script>
+    <header style="background-color: #f8f1e7; padding: 20px; text-align: center;">
+        <h1 style="color: #6b4226;">الحزم المكتبية</h1>
+        <p>كل ما تحتاجه لمكتبك في مكان واحد</p>
+    </header>
+
+    <section class="product-section" style="background-color: #f5f5f5;">
+        <div class="products-container">
+           <!-- قسم الحزم المكتبية -->
+    <section id="office" class="product-section" style="background-color: #f5f5f5;">
+        <h2 class="section-title">الحزم المكتبية</h2>
+        <div class="products-container">
+            <!-- منتج 1 -->
+            <div class="product-card">
+                <img src="pngtree-billboard-poster-selling-communication-photo-image_5748476.jpg" alt="لوحات اعلانية" class="product-image">
+                <div class="product-info">
+                    <h3>لوحات اعلانية</h3>
+                    <p>لوحات اعلانية بجودة عالية بمقاسات مختلفة</p>
+                    <p class="product-price">السعر: 10.0 دينار للوحة</p>
+                    <button class="add-to-cart" onclick="addToCart('لوحات اعلانية', 10, 'https://images.unsplash.com/photo-1518655048521-f130df041f66')">إضافة إلى السلة</button>
+                </div>
+            </div>
+            
+            <!-- منتج 2 -->
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f" alt="دفاتر يوميات" class="product-image">
+                <div class="product-info">
+                    <h3>دفاتر يوميات</h3>
+                    <p>دفاتر يوميات فاخرة بتصاميم أنيقة</p>
+                    <p class="product-price">السعر: 12.0 دينار</p>
+                    <button class="add-to-cart" onclick="addToCart('دفاتر يوميات', 12, 'https://images.unsplash.com/photo-1544947950-fa07a98d237f')">إضافة إلى السلة</button>
+                </div>
+            </div>
+            
+            <!-- منتج 3 -->
+            <div class="product-card">
+                <img src="H3576243f9b344b2e9d16089868adce5eQ.jpg" alt="دفاتر ملاحظات" class="product-image">
+                <div class="product-info">
+                    <h3>دفاتر ملاحظات</h3>
+                    <p>دفاتر ملاحظات عملية بتصاميم متنوعة</p>
+                    <p class="product-price">السعر: 8.0 دينار</p>
+                    <button class="add-to-cart" onclick="addToCart('دفاتر ملاحظات', 8, 'https://images.unsplash.com/photo-1460925895917-afdab827c52f')">إضافة إلى السلة</button>
+                </div>
+            </div>
+            
+            <!-- منتج 4 -->
+            <div class="product-card">
+                <img src="71uDXq7OpaL._AC_SL1000_.jpg" alt="أقلام ولوازم مكتبية" class="product-image">
+                <div class="product-info">
+                    <h3>حزم مكتبية كاملة</h3>
+                    <p>مجموعات متكاملة من اللوازم المكتبية</p>
+                    <p class="product-price">السعر: 20.0 دينار للحزمة</p>
+                    <button class="add-to-cart" onclick="addToCart('حزم مكتبية كاملة', 20, 'https://images.unsplash.com/photo-1586232702098-73b5f8d2a837')">إضافة إلى السلة</button>
+                </div>
+            </div>
+        </div>
+    </section>
+  <!-- المنتجات كما هي من الصفحة الرئيسية -->
+            <!-- انسخ محتوى قسم الحزم المكتبية وضعه هنا -->
+        </div>
+    </section>
+
+    <footer style="background-color: #6b4226; color: white; text-align: center; padding: 20px;">
+        © 2023 متجر الحفلات
+    </footer>
+</body>
+</html>
